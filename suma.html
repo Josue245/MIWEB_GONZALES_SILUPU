@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Suma de Dos Números | MIWEB_GONZALES_SILUPU</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #12121a;
+      --border: #2a2a3d;
+      --accent: #00f5a0;
+      --accent2: #00d9f5;
+      --text: #e8e8f0;
+      --muted: #6b6b8a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(ellipse at 30% 20%, rgba(0,245,160,0.07) 0%, transparent 50%),
+                  radial-gradient(ellipse at 70% 80%, rgba(0,217,245,0.07) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 2.5rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(12px);
+      z-index: 10;
+    }
+    .nav-brand { font-size: 0.75rem; color: var(--muted); font-family: 'Space Mono', monospace; letter-spacing: 0.1em; }
+    .nav-links { display: flex; gap: 1.5rem; }
+    .nav-links a {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-decoration: none;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+    .container {
+      width: 100%;
+      max-width: 520px;
+      padding: 2rem;
+      animation: fadeUp 0.6s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .tag {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--accent);
+      border: 1px solid rgba(0,245,160,0.3);
+      padding: 0.25rem 0.75rem;
+      border-radius: 2rem;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.1em;
+    }
+    h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+    h1 span {
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .subtitle { color: var(--muted); font-size: 0.9rem; margin-bottom: 2.5rem; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+    }
+    .input-group { margin-bottom: 1.25rem; }
+    label {
+      display: block;
+      font-size: 0.72rem;
+      font-family: 'Space Mono', monospace;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+    input[type="number"] {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      color: var(--text);
+      font-family: 'Space Mono', monospace;
+      font-size: 1.1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input[type="number"]:focus { border-color: var(--accent); }
+    button {
+      width: 100%;
+      padding: 0.9rem;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border: none;
+      border-radius: 10px;
+      color: #000;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: opacity 0.2s, transform 0.15s;
+    }
+    button:hover { opacity: 0.9; transform: translateY(-1px); }
+    button:active { transform: translateY(0); }
+    .result {
+      margin-top: 1.5rem;
+      padding: 1.25rem;
+      background: rgba(0,245,160,0.06);
+      border: 1px solid rgba(0,245,160,0.25);
+      border-radius: 10px;
+      display: none;
+      text-align: center;
+    }
+    .result.show { display: block; animation: fadeUp 0.3s ease; }
+    .result-label { font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--muted); letter-spacing: 0.1em; margin-bottom: 0.4rem; }
+    .result-value { font-size: 2.5rem; font-weight: 800; color: var(--accent); }
+    .result-eq { font-family: 'Space Mono', monospace; font-size: 0.85rem; color: var(--muted); margin-top: 0.3rem; }
+  </style>
+</head>
+<body>
+  <nav>
+    <span class="nav-brand">MIWEB_GONZALES_SILUPU</span>
+    <div class="nav-links">
+      <a href="suma.html" class="active">Suma</a>
+      <a href="factorial.html">Factorial</a>
+      <a href="nombre.html">Nombre</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="tag">01 / OPERACIONES</div>
+    <h1>Suma de <span>Dos Números</span></h1>
+    <p class="subtitle">Ingresa dos valores y obtén su resultado al instante.</p>
+    <div class="card">
+      <div class="input-group">
+        <label>PRIMER NÚMERO</label>
+        <input type="number" id="num1" placeholder="0" step="any">
+      </div>
+      <div class="input-group">
+        <label>SEGUNDO NÚMERO</label>
+        <input type="number" id="num2" placeholder="0" step="any">
+      </div>
+      <button onclick="calcularSuma()">CALCULAR SUMA</button>
+      <div class="result" id="result">
+        <div class="result-label">RESULTADO</div>
+        <div class="result-value" id="resultValue">0</div>
+        <div class="result-eq" id="resultEq"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function calcularSuma() {
+      const a = parseFloat(document.getElementById('num1').value) || 0;
+      const b = parseFloat(document.getElementById('num2').value) || 0;
+      const suma = a + b;
+      document.getElementById('resultValue').textContent = suma;
+      document.getElementById('resultEq').textContent = `${a} + ${b} = ${suma}`;
+      const res = document.getElementById('result');
+      res.classList.remove('show');
+      void res.offsetWidth;
+      res.classList.add('show');
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Enter') calcularSuma(); });
+  </script>
+</body>
+</html>
