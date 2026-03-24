@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Nombre | MIWEB_GONZALES_SILUPU</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #12121a;
+      --border: #2a2a3d;
+      --accent: #c084fc;
+      --accent2: #f472b6;
+      --text: #e8e8f0;
+      --muted: #6b6b8a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Syne', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background:
+        radial-gradient(ellipse at 20% 50%, rgba(192,132,252,0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 50%, rgba(244,114,182,0.1) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 2.5rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(12px);
+      z-index: 10;
+    }
+    .nav-brand { font-size: 0.75rem; color: var(--muted); font-family: 'Space Mono', monospace; letter-spacing: 0.1em; }
+    .nav-links { display: flex; gap: 1.5rem; }
+    .nav-links a {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-decoration: none;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a.active { color: var(--accent); }
+
+    .container {
+      width: 100%;
+      max-width: 680px;
+      padding: 2rem;
+      text-align: center;
+      animation: fadeUp 0.7s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .tag {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--accent);
+      border: 1px solid rgba(192,132,252,0.3);
+      padding: 0.25rem 0.75rem;
+      border-radius: 2rem;
+      margin-bottom: 2rem;
+      letter-spacing: 0.1em;
+    }
+
+    .avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: #fff;
+      margin: 0 auto 2rem;
+      box-shadow: 0 0 40px rgba(192,132,252,0.3);
+      animation: pulse 3s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 40px rgba(192,132,252,0.3); }
+      50% { box-shadow: 0 0 60px rgba(192,132,252,0.5); }
+    }
+
+    .hello {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 0.2em;
+      margin-bottom: 0.75rem;
+    }
+
+    .name {
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+      background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent));
+      background-size: 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 4s linear infinite;
+    }
+    @keyframes shimmer {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    .lastname {
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2rem;
+      opacity: 0.85;
+    }
+
+    .divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      margin: 0 auto 2rem;
+      border-radius: 2px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .info-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .info-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+    .info-card-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      margin-bottom: 0.5rem;
+    }
+    .info-card-value {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .footer-text {
+      font-family: 'Space Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+    .footer-text span { color: var(--accent); }
+
+    @media (max-width: 480px) {
+      .info-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <span class="nav-brand">MIWEB_GONZALES_SILUPU</span>
+    <div class="nav-links">
+      <a href="suma.html">Suma</a>
+      <a href="factorial.html">Factorial</a>
+      <a href="nombre.html" class="active">Nombre</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="tag">03 / IDENTIDAD</div>
+    <div class="avatar">GS</div>
+    <p class="hello">HOLA, MI NOMBRE ES</p>
+    <div class="name">Josue Gonzales</div>
+    <div class="lastname">Silupu</div>
+    <div class="divider"></div>
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-card-label">PROYECTO</div>
+        <div class="info-card-value">MIWEB</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">PÁGINAS</div>
+        <div class="info-card-value">3 archivos</div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">TECNOLOGÍA</div>
+        <div class="info-card-value">HTML5 + JS</div>
+      </div>
+    </div>
+    <p class="footer-text">Desarrollado con <span>❤</span> — GONZALES_SILUPU &copy; 2025</p>
+  </div>
+</body>
+</html>
